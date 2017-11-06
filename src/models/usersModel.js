@@ -20,10 +20,20 @@ const usersSchema = new Schema({
   password: {
     type: String,
     required: true,
+    select: false,
+  },
+  createdAt: {
+    type: Date,
+    select: false,
+  },
+  updatedAt: {
+    type: Date,
+    select: false,
   },
 }, {
   collection: 'users',
   timestamps: true,
+  versionKey: false,
 });
 
 module.exports = mongoose.model('usersModel', usersSchema);

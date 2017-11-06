@@ -27,9 +27,8 @@ module.exports = {
 
   updateUser: (req, res) => {
     const userId = get(req, 'params.id');
-    console.log(userId);
 
-    usersService.updateUser(req.body).then((successUser) => {
+    usersService.updateUser(userId, req.body).then((successUser) => {
       return res.status(200).json(successUser);
     }, (error) => {
       return res.status(500).json({ error });
@@ -37,13 +36,15 @@ module.exports = {
   },
   search: (req, res) => {
     const searchTerm = get(req, 'params.term');
-    console.log(searchTerm);
     return res.status(200).json(allUsers);
   },
 
   getUser: (req, res) => {
     const userId = get(req, 'params.id');
-    console.log(userId);
-    return res.status(200).json(allUsers[1]);
+    usersService.getUser(userId).then((user) => {
+      return res.status(200).json(user);
+    }, (getError) => {
+      return res.status(getError.status).json({ error: getError.message });
+    })
   },
 };

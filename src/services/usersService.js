@@ -19,13 +19,25 @@ module.exports = {
     });
   },
 
-  updateUser: (userData) => {
+  updateUser: (userId, updatedUserData) => {
     return new Promise((resolve, reject) => {
       if (userData.name) {
         resolve(userData);
       } else {
         reject('User needs a name');
       }
+    });
+  },
+
+  getUser: (userId) => {
+    return new Promise((resolve, reject) => {
+      UserModel.findById(userId, (findErr, user) => {
+        if (findErr) {
+          reject({ status: 500, message: findErr });
+        } else {
+          resolve(user);
+        }
+      })
     });
   },
 };
