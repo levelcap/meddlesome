@@ -1,10 +1,17 @@
 const express = require('express');
+const config =  require('./src/cfg/config');
 const path = require('path');
 const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
+mongoose.connect(config.database.url, {
+  useMongoClient: true
+});
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 // Routes
 const index = require('./routes/index');
